@@ -1,0 +1,104 @@
+%% Простая презентация с примером включения программного кода и
+%% пошаговых спецэффектов
+\documentclass{beamer}
+\usepackage{fontspec}
+\usepackage{xunicode}
+\usepackage{xltxtra}
+\usepackage{xecyr}
+\usepackage{hyperref}
+\setmainfont{CMU Serif}                 
+\setsansfont{CMU Sans Serif}            
+\setmonofont{CMU Typewriter Text}
+\usepackage{polyglossia}
+\setdefaultlanguage{russian}
+\usepackage{graphicx}
+\usepackage{listings}
+\lstdefinestyle{mycode}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  xleftmargin=\parindent,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries,
+  commentstyle=\itshape\color{gray!40!black},
+  stringstyle=\color{red},
+  numbers=left,
+  numbersep=5pt,
+  numberstyle=\tiny\color{gray},
+}
+\lstset{escapechar=@,style=mycode}
+
+\begin{document}
+\title{Частотный критерий отсутствия периодических режимов для задачи управления}
+\subtitle{предварительные результаты}
+\author{Астахов Марк, Давыдов Алексей\\{\footnotesize\textcolor{gray}{группа 424\\руководитель Г.А. Леонов}}}
+\institute{СПбГУ}
+\frame{\titlepage}
+
+\begin{frame}\frametitle{Введение}
+Расcматривается система 
+$$ \left\{
+\begin{array}{l}
+\frac{dx}{dt} = Ax + b\varphi(\sigma),\\
+\sigma = c^{*}x,\\
+\end{array}
+\right. \eqno{(1)}$$
+где $A$ -- постоянная $n \times n$ -- матрица, $b$ и $c$ -- постоянные $n$-мерные векторы, $\varphi(\sigma)$ - непрерывная функция.
+
+\bigskip
+Пусть дополнительно выполнено условие: $ 0 \leq \frac{\varphi}{\sigma} \leq M $ для всех $\sigma \neq 0$.
+
+Следовательно, отсюда $$\varphi (\sigma - \frac{\varphi}{M}) \geq 0. \eqno{(2)}$$
+\end{frame}
+
+
+\begin{frame}[fragile]\frametitle{}
+
+Разложим $\sigma(t)$ и $\varphi(t)$ в ряд Фурье по ортогональной системе функций Уолша:
+
+    $$\sigma(t) = {\sum\limits^{\infty}_{k=0} {a_{k}{wal}_{k}(t/T)}, \mbox{ }\varphi(t) = {\sum\limits^{\infty}_{k=0} {b_{k}{wal}_{k}(t/T)}, \mbox{ }\mbox{ }\mbox{ }\eqno{(3.1)}$$
+
+где $$a_k = \frac{1}{T}\int\limits_0^T \sigma(t){wal}_{k}(t/T)\,dt, \mbox{ } b_k = \frac{1}{T}\int\limits_0^T \varphi(t){wal}_{k}(t/T)\,dt, \eqno{(3.2)}$$
+
+\bigskip
+${wal}_{k}(t) = sign(sin(\pi kt))$ - $k$-я функция Уолша.
+\end{frame}
+
+\begin{frame}\frametitle{}
+Далее, для системы (1) верно соотношение: $$\sigma(t) = \alpha(t) + \int\limits_0^t \gamma(t-\tau)\varphi(\tau)\,d\tau, \eqno{(4)}$$
+
+где $\alpha(t) = c^{*}e^{At}x_{0}, \gamma(t) = c^{*}e^{At}b, x(0) = x_0 = 0$.
+
+Подставив (4) в формулу  (3.2) для $a_k$ иммем: $$ a_k = \frac{1}{T}\int\limits_0^T (\int\limits_0^t \gamma(t-\tau)\varphi(\tau)\,d\tau) {wal}_{k}(t/T)\,dt. $$
+
+
+\end{frame}
+
+\begin{frame}\frametitle{}
+Окончательно, перепишем неравенство (2), используя представление функций $\varphi(t)$ и $\sigma(t)$ в виде ряда Фурье (3.1), проинтегрируем по периоду T и получим: 
+$$ -{\sum\limits^{\infty}_{k=0} {(\frac{1}{M} - \frac{a_k}{b_k}) b_k^2}}\geq 0.$$
+
+Таким образом, периодический режим может существовать лишь в том случае, если хотя один из коэффициентов при $b_k^2$ отрицателен. Следовательно, критерий отсутствия периодических режимов имеет вид: $$ \frac{1}{M} - \frac{a_k}{b_k} \geq 0, k = 0,1,\ldots $$
+
+
+
+\end{frame}
+
+\begin{frame}\frametitle{План}
+Далее предлагается численно проверить полученный критерий для разных передаточных функций $W(p)$ и сравнить с результат с результатом, где в качестве в $\varphi$ и $\sigma$ выступает тригонометрический ряд Фурье.
+
+\end{frame}
+
+
+\begin{frame}\frametitle{Список литературы}
+
+1.{\it Леонов Г.A.} Теория управления. - СПб.: Изд-во C.-Петерб. ун-та, 2006. - 233 c.
+
+2.{\it Гарбер Е.Д.} О частотных критериях отсутствия периодических режимов, Автомат. и телемех., 1967, № 11, 178–182.
+
+3.{\it Голубов Б. И., Ефимов А. В., Скворцов В. А.} Ряды и преобразования Уолша: теория и применения. — М.: Изд-во Наука, 1987. - 344 с.
+
+\end{frame}
+
+
+\end{document}
